@@ -1,6 +1,7 @@
 import 'dart:ui';
 
 import 'package:flutter/material.dart';
+import 'package:flutter_colorpicker/flutter_colorpicker.dart';
 
 class Game_Screen extends StatefulWidget {
   const Game_Screen({Key? key}) : super(key: key);
@@ -17,6 +18,7 @@ class _Game_ScreenState extends State<Game_Screen> {
     "assets/images/game4.webp",
     "assets/images/game5.jpeg",
   ];
+  ColorPicker? colorPicker;
 
   @override
   Widget build(BuildContext context) {
@@ -24,53 +26,44 @@ class _Game_ScreenState extends State<Game_Screen> {
       child: Scaffold(
         body: Stack(
           children: [
-            ListView.builder(
-              itemCount: img.length,
-              itemBuilder: (context, index) {
-                return GestureDetector(
-                  onTap: () {
-                    Navigator.pushNamed(
-                        context, 'page2',arguments: img[index]);
-                  },
-                  child: Container(
-                    child: Image.asset("${img[index]}"),
-                  ),
-                );
-              },
+            Container(
+              child: Image.asset("${img[0]}"),
             ),
             GestureDetector(
               onPanStart: (details) {
                 setState(() {
                   RenderBox renderBox = context.findRenderObject() as RenderBox;
-                  Offset point = renderBox.globalToLocal(details.globalPosition);
+                  Offset point =
+                  renderBox.globalToLocal(details.globalPosition);
 
                   Paint p1 = Paint()
                     ..strokeWidth = 10
                     ..strokeCap = StrokeCap.round
                     ..color = Colors.purple;
 
-                  DrawModel d1= DrawModel(paint: p1,point: point);
+                  DrawModel d1 = DrawModel(paint: p1, point: point);
                   list.add(d1);
                 });
               },
               onPanUpdate: (details) {
                 setState(() {
                   RenderBox renderBox = context.findRenderObject() as RenderBox;
-                  Offset point = renderBox.globalToLocal(details.globalPosition);
+                  Offset point =
+                  renderBox.globalToLocal(details.globalPosition);
 
                   Paint p1 = Paint()
                     ..strokeWidth = 10
                     ..strokeCap = StrokeCap.round
                     ..color = Colors.purple;
 
-                  DrawModel d1= DrawModel(paint: p1,point: point);
+                  DrawModel d1 = DrawModel(paint: p1, point: point);
 
                   list.add(d1);
                 });
               },
               onPanEnd: (details) {
-                setState((){
-                  list.add(DrawModel(point: null,paint: null));
+                setState(() {
+                  list.add(DrawModel(point: null, paint: null));
                 });
               },
               child: CustomPaint(
@@ -78,12 +71,117 @@ class _Game_ScreenState extends State<Game_Screen> {
                 painter: Drawing(list),
               ),
             ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                Container(
+                  height: 5,
+                  width: double.infinity,
+                  color: Colors.black,
+                ),
+                Container(
+                  height: 100,
+                  width: double.infinity,
+                  color: Colors.black12,
+                  child: Row(
+                    children: [
+                      Container(
+                        height: 100,
+                        width: 70,
+                        color: Colors.pink.shade300,
+                        child: Icon(
+                          Icons.settings_backup_restore,
+                          size: 50,
+                        ),
+                      ),
+                      Container(
+                        height: 100,
+                        width: 1,
+                        color: Colors.white70,
+                      ),
+                      Container(
+                        height: 100,
+                        width: 70,
+                        color: Colors.pink.shade400,
+                        child: IconButton(
+                          onPressed: () {},
+                          icon: Icon(
+                            Icons.brush_outlined,
+                            size: 50,
+                          ),
+                        ),
+                      ),
+                      Container(
+                          height: 100,
+                          width: 70,
+                          color: Colors.pink.shade400,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.format_color_fill,
+                              size: 50,
+                            ),
+                          )),
+                      Container(
+                          height: 100,
+                          width: 70,
+                          color: Colors.pink.shade400,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.home_filled,
+                              size: 50,
+                            ),
+                          )),
+                      Container(
+                        height: 100,
+                        width: 1,
+                        color: Colors.white70,
+                      ),
+                      Container(
+                          height: 100,
+                          width: 78,
+                          color: Colors.pink.shade300,
+                          child: IconButton(
+                            onPressed: () {},
+                            icon: Icon(
+                              Icons.palette_outlined,
+                              size: 50,
+                            ),
+                          )),
+                    ],
+                  ),
+                ),
+              ],
+            ),
+            SizedBox(
+              height: 20,
+            ),
           ],
         ),
       ),
     );
   }
+
+  void bgColor() {
+    showDialog(
+        context: context,
+        builder: (context) {
+          return AlertDialog(
+            actions: [
+              ColorPicker(
+                  pickerColor: colorPicker,
+                  onColorChanged: (color) {
+                    setState(() {
+                      colorPicker = color as ColorPicker?;
+                    });
+                  })
+            ],
+          );
+        });
+  }
 }
+
 class DrawModel {
   Paint? paint;
   Offset? point;
@@ -99,7 +197,7 @@ class Drawing extends CustomPainter {
 
   @override
   void paint(Canvas canvas, Size size) {
-    for (int i = 0; i < pointlist.length-1; i++) {
+    for (int i = 0; i < pointlist.length - 1; i++) {
       if (pointlist[i].point != null && pointlist[i + 1].point != null) {
         canvas.drawLine(
             pointlist[i].point!, pointlist[i + 1].point!, pointlist[i].paint!);
@@ -118,4 +216,3 @@ class Drawing extends CustomPainter {
     return true;
   }
 }
-
