@@ -13,6 +13,12 @@ class _Game_PageState extends State<Game_Page> {
     "assets/images/game2.jpeg",
     "assets/images/game4.webp",
     "assets/images/game5.jpeg",
+    "assets/images/game6.webp",
+    "assets/images/game7.jpeg",
+    "assets/images/game8.webp",
+    "assets/images/game9.png",
+    "assets/images/game10.jpeg",
+    "assets/images/game11.webp"
   ];
   @override
   Widget build(BuildContext context) {

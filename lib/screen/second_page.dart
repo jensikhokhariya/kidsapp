@@ -22,12 +22,13 @@ class _Game_ScreenState extends State<Game_Screen> {
 
   @override
   Widget build(BuildContext context) {
+    String g1= ModalRoute.of(context)!.settings.arguments as String;
     return SafeArea(
       child: Scaffold(
         body: Stack(
           children: [
             Container(
-              child: Image.asset("${img[0]}"),
+              child: Image.asset("$g1"),
             ),
             GestureDetector(
               onPanStart: (details) {
@@ -163,7 +164,7 @@ class _Game_ScreenState extends State<Game_Screen> {
     );
   }
 
-  void bgColor() {
+  /*void bgColor() {
     showDialog(
         context: context,
         builder: (context) {
@@ -179,7 +180,7 @@ class _Game_ScreenState extends State<Game_Screen> {
             ],
           );
         });
-  }
+  }*/
 }
 
 class DrawModel {
