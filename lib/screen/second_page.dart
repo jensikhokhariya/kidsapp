@@ -18,7 +18,7 @@ class _Game_ScreenState extends State<Game_Screen> {
     "assets/images/game4.webp",
     "assets/images/game5.jpeg",
   ];
-  ColorPicker? colorPicker;
+  Color c1 = Colors.blue;
 
   @override
   Widget build(BuildContext context) {
@@ -40,7 +40,7 @@ class _Game_ScreenState extends State<Game_Screen> {
                   Paint p1 = Paint()
                     ..strokeWidth = 10
                     ..strokeCap = StrokeCap.round
-                    ..color = Colors.purple;
+                    ..color = c1;
 
                   DrawModel d1 = DrawModel(paint: p1, point: point);
                   list.add(d1);
@@ -55,7 +55,7 @@ class _Game_ScreenState extends State<Game_Screen> {
                   Paint p1 = Paint()
                     ..strokeWidth = 10
                     ..strokeCap = StrokeCap.round
-                    ..color = Colors.purple;
+                    ..color = c1;
 
                   DrawModel d1 = DrawModel(paint: p1, point: point);
 
@@ -144,7 +144,9 @@ class _Game_ScreenState extends State<Game_Screen> {
                           width: 78,
                           color: Colors.pink.shade300,
                           child: IconButton(
-                            onPressed: () {},
+                            onPressed: () {
+                              bgColor();
+                            },
                             icon: Icon(
                               Icons.palette_outlined,
                               size: 50,
@@ -164,23 +166,23 @@ class _Game_ScreenState extends State<Game_Screen> {
     );
   }
 
-  /*void bgColor() {
+  void bgColor() {
     showDialog(
         context: context,
         builder: (context) {
           return AlertDialog(
             actions: [
               ColorPicker(
-                  pickerColor: colorPicker,
+                  pickerColor: c1,
                   onColorChanged: (color) {
                     setState(() {
-                      colorPicker = color as ColorPicker?;
+                      c1 = color;
                     });
                   })
             ],
           );
         });
-  }*/
+  }
 }
 
 class DrawModel {
